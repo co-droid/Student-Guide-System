@@ -24,7 +24,9 @@
   * The module will then be able to build a test module and then give out the required recommendations on required parameters.
 
 # Process and Methodology
-  ![](images/process.png)
+  
+  ![image](https://user-images.githubusercontent.com/64602660/231267391-81d423a0-fd4d-4471-9147-e0da45b4d11c.png)
+
 
 
 
