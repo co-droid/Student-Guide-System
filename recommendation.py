@@ -1,27 +1,17 @@
 import pandas as pd
 import streamlit as st
 import pickle
-from iteration_utilities import unique_everseen
-from iteration_utilities import duplicates
+#from iteration_utilities import duplicates 
+from more_itertools import unique_everseen 
 
 nav = st.sidebar.selectbox(
 'PLEASE SELECT WHAT YOU ARE LOOKING FOR',
 ["HOME","JOB","HIGHER STUDIES"])
 
 if nav == "HOME":
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.write(' ')
-
-    with col2:
-        st.image("banasthali.jpg")
-
-    with col3:
-        st.write(' ')
-
+    st.image("download.jpeg")
     st.markdown(
-        """ <h1 align="Center"><font face="Garamond" color="#4863A0"><b>STUDENT GUIDE SYSTEM</b></font></h1>""",
+        """ <h1 align="Center"><font face="Garamond" color="#4863A0"><b>STUDENT GUIDE RECOMMENDATION SYSTEM</b></font></h1>""",
         True)
 #@@@@@@@@ SETTING JOB PAGE
 if nav == "JOB":
@@ -37,7 +27,7 @@ if nav == "JOB":
 
         recommended_job = []
         for i in job_list:
-            recommended_job.append(job1.iloc[i[0]].JOB_TYPE)#job1 dataframe
+            recommended_job.append(job1.iloc[i[0]].JOB_TYPE)
         recommended_job1 = set(recommended_job)
         return recommended_job1
 
@@ -101,7 +91,6 @@ if nav == "JOB":
     INTERESTS = st.multiselect('Select Your Interests', SPEC3)
     interest = pd.Series(INTERESTS)
     skill_2 = interest.values
-    container = st.container()
 
     if st.button('Recommend'):
         recommendation = []
@@ -113,10 +102,12 @@ if nav == "JOB":
             recommendation.extend(recommend_inti(i))
         recommendation.extend(recommend_ug(selected_ug))
         recommendation.extend(recommend_spe(selected_Specialization))
-        result = pd.DataFrame(unique_everseen(duplicates(recommendation)))
-        result = result.rename(columns={0:"Recommended Jobs for you"})
+        unique_recommendations=list(unique_everseen(recommendation))
+       #result = pd.DataFrame(unique_everseen(duplicates(recommendation)))
+        #unique_recommendations= unique_recommendations.rename(columns={0:"Recommended Jobs for you"})
+        unique_recommendations=pd.DataFrame({'recommend jobs for you':unique_recommendations})
 
-        st.write(result[1:16])
+        st.write(unique_recommendations[1:16])
 #@@@@@@@@ SETTING HIGHER STUDIES PAGE
 if nav == "HIGHER STUDIES":
     st.image("banasthali.jpg",width=100)
@@ -183,6 +174,6 @@ if nav == "HIGHER STUDIES":
         recommendation1.extend(recommend_UG(key_ug))
         recommendation1.extend(recommend_Spec(key_spec))
 
-        result1 = pd.DataFrame(unique_everseen(duplicates(recommendation1)))
-        result1 = result1.rename(columns={0:"PG streams Recommended for you"})
-        st.write(result1)
+        unique_recommendations1 = list(unique_everseen(recommendation1))
+        unique_recommendations1 = pd.DataFrame({'PG streams Recommended for you':unique_recommendations1})
+        st.write(unique_recommendations1)
