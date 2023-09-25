@@ -2,3 +2,4 @@ streamlit
 requests
 click==8.0.4
 iteration-utilities
+more_itertools
